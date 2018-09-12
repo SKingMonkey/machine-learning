@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7136a169-74f9-4a20-a6d8-5574763db91b" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cluster/clusters.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="7136a169-74f9-4a20-a6d8-5574763db91b" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,13 +34,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="gitignore" value="16" />
-          <entry key="py" value="2659" />
+          <entry key="py" value="2822" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="16" />
-          <entry key="Python" value="2659" />
+          <entry key="Python" value="2822" />
         </counts>
       </usages-collector>
     </session>
@@ -64,17 +59,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cluster/clusters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="637">
-              <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
+            <state relative-caret-position="577">
+              <caret line="139" column="22" selection-start-line="139" selection-start-column="22" selection-end-line="139" selection-end-column="22" />
               <folding>
                 <element signature="e#23#34#0" expanded="true" />
-                <marker date="1536765104834" expanded="true" signature="74:79" ph="..." />
-                <marker date="1536765104834" expanded="true" signature="403:404" ph="..." />
-                <marker date="1536765104834" expanded="true" signature="403:409" ph="..." />
-                <marker date="1536765104834" expanded="true" signature="1039:2073" ph="..." />
-                <marker date="1536765104834" expanded="true" signature="2113:2114" ph="..." />
-                <marker date="1536765104834" expanded="true" signature="2113:2119" ph="..." />
-                <marker date="1536765104834" expanded="true" signature="2502:2503" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="74:79" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="403:404" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="403:409" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="1039:2073" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="2113:2114" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="2113:2119" ph="..." />
+                <marker date="1536765914089" expanded="true" signature="2502:2503" ph="..." />
               </folding>
             </state>
           </provider>
@@ -157,6 +152,11 @@
               <item name="machine-learning" type="b2602c69:ProjectViewProjectNode" />
               <item name="machine-learning" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="machine-learning" type="b2602c69:ProjectViewProjectNode" />
+              <item name="machine-learning" type="462c0819:PsiDirectoryNode" />
+              <item name="venv" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -238,7 +238,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="0" width="1676" height="1065" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19105199" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -294,17 +293,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cluster/clusters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="637">
-          <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
+        <state relative-caret-position="577">
+          <caret line="139" column="22" selection-start-line="139" selection-start-column="22" selection-end-line="139" selection-end-column="22" />
           <folding>
             <element signature="e#23#34#0" expanded="true" />
-            <marker date="1536765104834" expanded="true" signature="74:79" ph="..." />
-            <marker date="1536765104834" expanded="true" signature="403:404" ph="..." />
-            <marker date="1536765104834" expanded="true" signature="403:409" ph="..." />
-            <marker date="1536765104834" expanded="true" signature="1039:2073" ph="..." />
-            <marker date="1536765104834" expanded="true" signature="2113:2114" ph="..." />
-            <marker date="1536765104834" expanded="true" signature="2113:2119" ph="..." />
-            <marker date="1536765104834" expanded="true" signature="2502:2503" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="74:79" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="403:404" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="403:409" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="1039:2073" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="2113:2114" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="2113:2119" ph="..." />
+            <marker date="1536765914089" expanded="true" signature="2502:2503" ph="..." />
           </folding>
         </state>
       </provider>
