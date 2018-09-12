@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
+import math
 
-def loadMoviesLens(path='./data/movielens'):
+def loadMoviesLens(path='./data'):
     movies = {}
     for line in open(path + '/u.item'):
         id, title = line.split('|')[0:2]
@@ -12,6 +13,33 @@ def loadMoviesLens(path='./data/movielens'):
         prefs.setdefault(user, {})
         prefs[user][movies[movieid]] = float(rating)
     return prefs
+
+def sim_pearson(prefs, p1, p2):
+    si = {}
+
+    for item in prefs[p1]:
+        if item in prefs[p2]:
+            si[item] = 1
+
+    n = len(si)
+
+    if n == 0:
+        return 1
+
+    sum1 = sum([prefs[p1][it] for it in si])
+    sum2 = sum([prefs[p2][it] for it in si])
+
+    sum1Sq = sum([pow(prefs[p1][it], 2) for it in si])
+    sum2Sq = sum([pow(prefs[p2][it], 2) for it in si])
+
+    pSum = sum([prefs[p1][it] * prefs[p2][it] for it in si])
+
+    num = pSum - (sum1 * sum2 / n)
+    den = math.sqrt((sum1Sq - pow(sum1, 2) / n) * (sum2Sq - pow(sum2, 2) / n))
+    if den == 0:
+        return 0
+
+    return num / den
 
 def getRecommentdations(prefs, person, similarity=sim_pearson):
     totals = {}
@@ -25,7 +53,7 @@ def getRecommentdations(prefs, person, similarity=sim_pearson):
             continue
         for item in prefs[other]:
             if item not in prefs[person] or prefs[person][item] == 0:
-                totals.sefdefault(item, 0)
+                totals.setdefault(item, 0)
                 totals[item] += prefs[other][item] * sim
                 simSums.setdefault(item, 0)
                 simSums[item] += sim
@@ -57,32 +85,6 @@ def getRecommendedItems(prefs, itemMatch, user):
 
     return rankings
 
-def sim_pearson(prefs, p1, p2):
-    si = {}
-
-    for item in prefs[p1]:
-        if item in prefs[p2]:
-            si[item] = 1
-
-    n = len(si)
-
-    if n == 0:
-        return 1
-
-    sum1 = sum([prefs[p1][it] for it in si])
-    sum2 = sum([prefs[p2][it] for it in si])
-
-    sum1Sq = sum([pow(prefs[p1][it], 2) for it in si])
-    sum2Sq = sum([pow(prefs[p2][it], 2) for it in si])
-
-    pSum = sum([prefs[p1][it] * prefs[p2][it] for it in si])
-
-    num = pSum - (sum1 * sum2 / n)
-    den = sqrt((sum1Sq - pow(sum1, 2) / n) * (sum2Sq - pow(sum2, 2) / n))
-    if den == 0:
-        return 0
-
-    return num / den
 
 def topMatches(prefs, person, n=5, similarity=sim_pearson):
     scores = [(similarity(prefs, person, other), other) for other in prefs if other != person]
@@ -112,7 +114,7 @@ def transformPrefs(prefs):
 
     for person in prefs:
         for item in prefs[person]:
-            result.sefdefault(item, {})
+            result.setdefault(item, {})
 
             result[item][person] = prefs[person][item]
 
