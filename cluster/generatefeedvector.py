@@ -15,6 +15,11 @@ def getwordcounts(url):
     d = feedparser.parse(url)
     wc = {}
 
+    try:
+        title = d.feed.title
+    except Exception:
+        return None, {}
+
     for e in d.entries:
         if 'summary' in e: summary = e.summary
         else: summary = e.description
@@ -28,10 +33,8 @@ def getwordcounts(url):
         for word in words:
             wc.setdefault(word, 0)
             wc[word] += 1
-    try:
-        return d.feed.title, wc
-    except Exception:
-        return 'No title', wc
+
+    return title, wc
 
 
 if __name__ == '__main__':
@@ -41,6 +44,10 @@ if __name__ == '__main__':
     feedlist = [line for line in file('feedlist.txt')]
     for feedurl in feedlist:
         title, wc = getwordcounts(feedurl)
+        if not title:
+            print 'Skip %s' % feedurl
+            continue
+        print 'Get title: %s' % title
         wordcounts[title] = wc
 
         for word, count in wc.iteritems():
