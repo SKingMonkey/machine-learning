@@ -1,6 +1,9 @@
 # -*- coding:utf-8 -*-
+from __future__ import absolute_import, print_function, unicode_literals
+
 import feedparser
 import re
+import socket
 
 
 def getwords(html):
@@ -12,6 +15,7 @@ def getwords(html):
 
 
 def getwordcounts(url):
+    socket.setdefaulttimeout(10)
     d = feedparser.parse(url)
     wc = {}
 
@@ -27,7 +31,7 @@ def getwordcounts(url):
         try:
             words = getwords(e.title + ' ' + summary)
         except Exception:
-            print e.keys()
+            print(e.keys())
             continue
 
         for word in words:
@@ -45,9 +49,9 @@ if __name__ == '__main__':
     for feedurl in feedlist:
         title, wc = getwordcounts(feedurl)
         if not title:
-            print 'Skip %s' % feedurl
+            print('Skip %s' % feedurl)
             continue
-        print 'Get title: %s' % title
+        print('Get title: %s' % title)
         wordcounts[title] = wc
 
         for word, count in wc.iteritems():
@@ -67,7 +71,7 @@ if __name__ == '__main__':
             f.write('\t%s' % word)
         f.write('\n')
         for blog, wc in wordcounts.iteritems():
-            f.write(blog)
+            f.write(blog.encode('utf-8'))
             for word in wordlist:
                 if word in wc:
                     f.write('\t%d' % wc[word])
