@@ -139,12 +139,12 @@ class Searcher(object):
         for word in words:
             wordrow = self.con.execute('select rowid from wordlist where word="%s"' % word).fetchone()
 
-            if not wordrow:
+            if wordrow:
                 wordid = wordrow[0]
                 wordids.append(wordid)
 
                 if tablenumber > 0:
-                    tablelist = ','
+                    tablelist += ','
                     clauselist += ' and '
                     clauselist += 'w%d.urlid=w%d.urlid and ' % (tablenumber - 1, tablenumber)
                 fieldlist += ',w%d.location' % tablenumber
@@ -154,8 +154,67 @@ class Searcher(object):
                 tablenumber += 1
 
         fullquery = 'select %s from %s where %s' % (fieldlist, tablelist, clauselist)
+        print fullquery
         cur = self.con.execute(fullquery)
         rows = [row for row in cur]
 
         return rows, wordids
 
+    def getscoredlist(self, rows, wordids):
+        totalscores = dict([(row[0], 0) for row in rows])
+
+        weights = []
+        for (weight, scores) in weights:
+            for url in totalscores:
+                totalscores[url] += weight * scores[url]
+        return totalscores
+
+    def geturlname(self, id):
+        return self.con.execute('select url from urllist where rowid=%s' % id).fetchone()[0]
+
+    def query(self, q):
+        rows, wordids = self.getmatchrows(q)
+        scores = self.getscoredlist(rows, wordids)
+        rankedscores = sorted([(score, url) for (url, score) in scores.iteritems()], reverse=True)
+        for (score, urlid) in rankedscores[:10]:
+            print '%f\t%s' % (score, self.geturlname(urlid))
+
+    def normalizescores(self, scores, smallIsBetter=0):
+        vsmall = 0.00001
+        if smallIsBetter:
+            minscore = min(scores.values())
+            return dict([(u, float(minscore) / max(vsmall, 1) for (u, l) in scores.iteritems()])
+        else:
+            maxscore = max(scores.values())
+            if maxscore == 0:
+                maxscore = vsmall
+            return dict([(u, float(c) / maxscore) for (u, c) in scores.iteritems()])
+
+    def frequencyscore(self, rows):
+        counts = dict([(row[0], 0) for row in rows])
+        for row in rows:
+            counts[row[0]] += 1
+        return self.normalizescores(counts)
+
+    def locationscore(self, rows):
+        locations = dict([(row[0], 1000000) for row in rows])
+
+        for row in rows:
+            loc = sum(row[1:])
+
+            if loc < locations[row[0]]:
+                locations[row[0]] = loc
+
+        return self.normalizescores(locations, smallIsBetter = 1)
+
+    def distancescore(self, rows):
+        if len(rows[0]) <= 2:
+            return dict([(row[0], 1.0) for row in rows])
+
+        mindistance = dict([(row[0], 1000000) for row in rows])
+        for row in rows:
+            dist = sum([abs(row[i] - row[i - 1]) for i in range(2, len(row))])
+            if dist < mindistance[row[0]]:
+                mindistance[row[0]] = dist
+
+        return self.normalizescores(mindistance, smallIsBetter = 1)
