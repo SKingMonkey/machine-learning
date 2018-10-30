@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
 import urllib2
 import re
+import pysqlite3 as sqlite
 from bs4 import BeautifulSoup
-from pysqlite2 import dbapi2 as sqlite
 from urlparse import urljoin
+
+import nn
 
 pages = ['https://kiwitobes.com/2013/09/26/twitter-lights-and-memory-limits-with-arduino-yun/']
 
@@ -183,7 +185,7 @@ class Searcher(object):
         vsmall = 0.00001
         if smallIsBetter:
             minscore = min(scores.values())
-            return dict([(u, float(minscore) / max(vsmall, 1) for (u, l) in scores.iteritems()])
+            return dict([(u, float(minscore) / max(vsmall, l) for (u, l) in scores.iteritems()])
         else:
             maxscore = max(scores.values())
             if maxscore == 0:
@@ -268,3 +270,11 @@ class Searcher(object):
         normalizescores = dict([(u, float(l)/maxscore) for (u,l) in linkscores.iteritems()])
 
         return normalizescores
+
+    def nnscore(self, rows, wordids):
+        mynet = nn,searchnet('nn.db')
+        urlids = [urlid for urlid in set([row[0] for row in rows])]
+        nnres = mynet.getresult(worids, urlids)
+
+        scores = dict([(urlids[i], nnres[i]) for i in range(len(urlids))])
+        return self.normalizescores(scores)
