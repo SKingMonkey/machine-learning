@@ -185,7 +185,7 @@ class Searcher(object):
         vsmall = 0.00001
         if smallIsBetter:
             minscore = min(scores.values())
-            return dict([(u, float(minscore) / max(vsmall, l) for (u, l) in scores.iteritems()])
+            return dict([(u, float(minscore) / max(vsmall, l)) for (u, l) in scores.iteritems()])
         else:
             maxscore = max(scores.values())
             if maxscore == 0:
