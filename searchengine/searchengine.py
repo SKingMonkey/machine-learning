@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import urllib2
 import re
-import pysqlite3 as sqlite
+import sqlite3 as sqlite
 from bs4 import BeautifulSoup
 from urlparse import urljoin
 
